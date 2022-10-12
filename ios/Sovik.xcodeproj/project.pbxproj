@@ -104,11 +104,11 @@
 			};
 			buildConfigurationList = 0972F46728EC8BA000FD1E54 /* Build configuration list for PBXProject "Sovik" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = cs;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				cs,
 			);
 			mainGroup = 0972F46328EC8BA000FD1E54;
 			productRefGroup = 0972F46D28EC8BA000FD1E54 /* Products */;
