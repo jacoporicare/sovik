@@ -9,10 +9,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,6 +17,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -89,7 +87,6 @@ fun Content() {
                                 onPress = { position ->
                                     origin = position.x
                                     offset = 0f
-
                                     owls =
                                         ceil(origin / scaleFactor).coerceIn(1f, maxOwls.toFloat())
                                 }
@@ -130,25 +127,52 @@ fun Content() {
             }
         }
 
-        Button(
-            onClick = {
-                val sendIntent: Intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(
-                        Intent.EXTRA_TEXT,
-                        "Hodnotím ${"🦉".repeat(owls.toInt())} (${owls.toInt()}/$maxOwls) přes Sovíka."
-                    )
-                    type = "text/plain"
-                }
-                val shareIntent = Intent.createChooser(sendIntent, null)
-
-                context.startActivity(shareIntent)
-            },
+        Column(
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Hodnotit",
-                fontSize = 24.sp
-            )
+            Button(
+                onClick = {
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(
+                            Intent.EXTRA_TEXT,
+                            "Hodnotím ${"🦉".repeat(owls.toInt())} (${owls.toInt()}/$maxOwls) přes Sovíka."
+                        )
+                        type = "text/plain"
+                    }
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+
+                    context.startActivity(shareIntent)
+                },
+            ) {
+                Text(
+                    text = "Hodnotit ${owls.toInt()}/$maxOwls",
+                    fontSize = 24.sp
+                )
+            }
+
+            TextButton(
+                onClick = {
+                    val sendIntent: Intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(
+                            Intent.EXTRA_TEXT,
+                            "Tohle nestojí ani za jednoho 🦉. Hodnoceno přes Sovíka."
+                        )
+                        type = "text/plain"
+                    }
+                    val shareIntent = Intent.createChooser(sendIntent, null)
+
+                    context.startActivity(shareIntent)
+                },
+            ) {
+                Text(
+                    text = "Tohle nestojí ani za jednoho 🦉",
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
