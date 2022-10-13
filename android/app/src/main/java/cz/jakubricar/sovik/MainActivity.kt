@@ -25,8 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cz.jakubricar.sovik.ui.theme.SovikTheme
 import kotlin.math.ceil
-import kotlin.math.max
-import kotlin.math.min
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,7 +90,8 @@ fun Content() {
                                     origin = position.x
                                     offset = 0f
 
-                                    owls = min(maxValue, max(1f, ceil(origin / scaleFactor)))
+                                    owls =
+                                        ceil(origin / scaleFactor).coerceIn(1f, maxOwls.toFloat())
                                 }
                             )
                         }
@@ -101,7 +100,8 @@ fun Content() {
                                 offset += delta
 
                                 val coordinates = (origin + offset).coerceIn(0f, maxValue)
-                                owls = min(maxValue, max(1f, ceil(coordinates / scaleFactor)))
+                                owls =
+                                    ceil(coordinates / scaleFactor).coerceIn(1f, maxOwls.toFloat())
 
                             },
                             orientation = Orientation.Horizontal,
