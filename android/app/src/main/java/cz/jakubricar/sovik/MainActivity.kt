@@ -52,7 +52,7 @@ fun Content() {
     val context = LocalContext.current
 
     Column(
-        modifier = Modifier.padding(24.dp),
+        modifier = Modifier.padding(horizontal = 12.dp, vertical = 24.dp),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -75,9 +75,14 @@ fun Content() {
                     .fillMaxWidth()
                     .padding(top = 16.dp)
             ) {
-                val density = LocalDensity.current.density
-                val maxValue = maxWidth.value * density
-                val scaleFactor = maxValue / maxOwls
+                val maxWidthDp = maxWidth
+                val maxWidthPx = with(LocalDensity.current) {
+                    maxWidthDp.toPx()
+                }
+                val scaleFactor = maxWidthPx / maxOwls
+                val owlSize = with(LocalDensity.current) {
+                    (maxWidthPx / maxOwls * 0.75f).toSp()
+                }
 
                 Row(
                     modifier = Modifier
@@ -96,7 +101,7 @@ fun Content() {
                             state = rememberDraggableState { delta ->
                                 offset += delta
 
-                                val coordinates = (origin + offset).coerceIn(0f, maxValue)
+                                val coordinates = (origin + offset).coerceIn(0f, maxWidthPx)
                                 owls =
                                     ceil(coordinates / scaleFactor).coerceIn(1f, maxOwls.toFloat())
 
@@ -114,7 +119,7 @@ fun Content() {
                                 text = "🦉",
                                 modifier = Modifier
                                     .alpha(if (i > owls) 0.3f else 1f),
-                                fontSize = 28.sp
+                                fontSize = owlSize
                             )
 
                             Text(
